@@ -1,16 +1,24 @@
-import { getSession } from "next-auth/react";
-import { NextPageContext } from "next";
-import Login from "./components/Home/login";
+"use client";
 
-export const generateStaticParams = async (content: NextPageContext) => {
-  const session = await getSession(content);
-  return { props: { session } };
-};
+import { NextPage } from "next";
+import { useSession } from "next-auth/react";
+import Login from "./components/Auth/Login";
+import Chat from "./components/Chat/Chat";
 
-export default function Home() {
+const Home: NextPage = () => {
+  const { status, data } = useSession();
+
   return (
-    <main style={{ padding: 20 }}>
-      <Login />
+    <main>
+      {status === "loading" ? (
+        <div>loading</div>
+      ) : data?.user?.username ? (
+        <Chat />
+      ) : (
+        <Login />
+      )}
     </main>
   );
-}
+};
+
+export default Home;
