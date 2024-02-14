@@ -12,7 +12,7 @@ const Home: NextPage = () => {
     <main>
       {status === "loading" ? (
         <div>loading</div>
-      ) : data?.user?.username ? (
+      ) : data && data?.user?.username ? (
         <Chat />
       ) : (
         <Login />
