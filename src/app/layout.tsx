@@ -7,6 +7,7 @@ import { ThemeProvider } from "./components/Providers/ThemeWrapper";
 import { ApolloProvider } from "@apollo/client";
 import client from "@/graphql/apollo-client";
 import ApolloWrapper from "@/graphql/apollo-client";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,20 +23,21 @@ export default function RootLayout({
 }>) {
   return (
     <ApolloWrapper>
-      <SessionWrapper>
-        <html lang="en" suppressHydrationWarning>
-          <body className={inter.className}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </body>
-        </html>
-      </SessionWrapper>
+      {/* <SessionWrapper> */}
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+          <Toaster richColors />
+        </body>
+      </html>
+      {/* </SessionWrapper> */}
     </ApolloWrapper>
   );
 }
