@@ -22,14 +22,32 @@ const Login = ({ session }: Props) => {
     CreateUserReqData
   >(UserQuery.Mutations.createUsername);
 
+  const reloadSesion = () => {
+    console.log("he");
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
   const onSubmit = async () => {
     try {
       if (username === "") {
         toast.error("Please Enter A Username");
         return;
       }
-      await createUsername({ variables: { username } });
-    } catch (err) {
+      const { data } = await createUsername({ variables: { username } });
+      if (!data) {
+        throw new Error();
+      }
+
+      if (data.createUsername.error) {
+        const {
+          createUsername: { error },
+        } = data;
+        throw new Error(error);
+      }
+      toast.success("Username created successfully!");
+      window.location.reload();
+    } catch (err: any) {
+      toast.error(err?.message);
       console.log(err);
     }
   };
