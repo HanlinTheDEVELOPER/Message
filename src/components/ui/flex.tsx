@@ -6,7 +6,7 @@ interface Props {
 }
 
 const Flex = ({ classname, children }: Props) => {
-  return <div className={cn("flex  h-100vh", classname)}>{children}</div>;
+  return <div className={cn("flex   h-screen", classname)}>{children}</div>;
 };
 
 export default Flex;
