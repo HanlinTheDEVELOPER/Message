@@ -2,15 +2,22 @@
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
 import React from "react";
+import ConversationWrapper from "./Conversion/ConversationWrapper";
+import { Session } from "next-auth";
+import FeedWrapper from "./Feed/FeedWrapper";
+import Flex from "@/components/ui/flex";
 
-type Props = {};
+interface Props {
+  session: Session;
+}
 
-const Chat = (props: Props) => {
+const Chat = ({ session }: Props) => {
   return (
-    <div>
-      Chat
+    <Flex>
+      <ConversationWrapper session={session} />
+      <FeedWrapper session={session} />
       <Button onClick={() => signOut()}>Sign Out</Button>
-    </div>
+    </Flex>
   );
 };
 

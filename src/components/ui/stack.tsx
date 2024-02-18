@@ -1,14 +1,16 @@
-import React from "react";
+import { cn } from "@/lib/utils";
 
 interface Props {
   children: React.ReactNode;
-  spacing?: number;
-  className?: string;
+  classname?: string;
 }
 
-const Stack = ({ children, spacing, className }: Props) => {
-  const classNames = `flex flex-col gap-20 ${className}`;
-  return <div className="flex flex-col gap-12 items-center">{children}</div>;
+const Stack = ({ classname, children }: Props) => {
+  return (
+    <div className={cn("flex flex-col gap-12 items-center", classname)}>
+      {children}
+    </div>
+  );
 };
 
 export default Stack;

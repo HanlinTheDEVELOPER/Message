@@ -10,6 +10,7 @@ import { FormEvent, useState } from "react";
 import UserQuery from "@/graphql/operations/user";
 import { toast } from "sonner";
 import { Session } from "next-auth";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 type Props = {
   session: Session | null;
@@ -22,11 +23,11 @@ const Login = ({ session }: Props) => {
     CreateUserReqData
   >(UserQuery.Mutations.createUsername);
 
-  const reloadSesion = () => {
-    console.log("he");
-    const event = new Event("visibilitychange");
-    document.dispatchEvent(event);
-  };
+  // const reloadSesion = () => {
+  //   console.log("he");
+  //   const event = new Event("visibilitychange");
+  //   document.dispatchEvent(event);
+  // };
   const onSubmit = async () => {
     try {
       if (username === "") {
@@ -55,7 +56,7 @@ const Login = ({ session }: Props) => {
   return (
     <section className="flex justify-center items-center h-screen ">
       {session?.user ? (
-        <Stack className="flex flex-col gap-12 items-center">
+        <Stack classname="gap-6">
           <TypographyH3>Create a Username</TypographyH3>
 
           <Input
@@ -63,14 +64,22 @@ const Login = ({ session }: Props) => {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="mb-6"
           />
-          <Button onClick={onSubmit} className="w-full" type="submit">
-            Save
+          <Button
+            onClick={onSubmit}
+            className="w-full"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              "Save"
+            )}
           </Button>
         </Stack>
       ) : (
-        <Stack>
+        <Stack classname="gap-12">
           <TypographyH1>Messenger</TypographyH1>
           <Button onClick={() => signIn("google")}>Sign In With Google</Button>
         </Stack>
