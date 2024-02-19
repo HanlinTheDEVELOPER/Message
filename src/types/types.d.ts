@@ -8,3 +8,11 @@ interface CreateUserResData {
 interface CreateUserReqData {
   username: string;
 }
+
+interface SearchUserReqData {
+  username: string;
+}
+
+interface SearchUserResData {
+  searchUsers: [{ id: string; username: string }];
+}

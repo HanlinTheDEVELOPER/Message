@@ -10,15 +10,23 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { useLazyQuery } from "@apollo/client";
 import { FormEvent, useRef } from "react";
+import UserOperation from "@/graphql/operations/user";
 
 interface Props {}
 
 const CreateConversation = (props: Props) => {
   const inputRef = useRef<HTMLInputElement | null>();
+  const [searchUser, { data, loading, error }] = useLazyQuery<
+    SearchUserResData,
+    SearchUserReqData
+  >(UserOperation.Queries.searchUsers);
+
   const onSearchSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(inputRef.current?.value);
+    searchUser({ variables: { username: inputRef.current?.value as string } });
   };
 
   return (
@@ -38,7 +46,9 @@ const CreateConversation = (props: Props) => {
                 className="my-4"
                 ref={(el) => (inputRef.current = el)}
               />
-              <Button className="cursor-pointer">Search</Button>
+              <Button variant="secondary" className="cursor-pointer">
+                Search
+              </Button>
             </form>
           </DialogDescription>
         </DialogHeader>
