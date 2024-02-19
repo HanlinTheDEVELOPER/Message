@@ -7,6 +7,7 @@ const user = {
         searchUsers(username: $username) {
           id
           username
+          image
         }
       }
     `,

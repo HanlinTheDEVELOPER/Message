@@ -1,21 +1,29 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Flex from "@/components/ui/flex";
 import TypographyH4 from "@/components/ui/h4";
-import React from "react";
-import { GearIcon } from "@radix-ui/react-icons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import getProfilePlaceholder from "@/lib/getProfilePlaceholder";
 import { Session } from "next-auth";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useTheme } from "next-themes";
+import { IconSun, IconMoonStars } from "@tabler/icons-react";
 
 type Props = {
   session: Session;
 };
 
 const Header = ({ session }: Props) => {
+  const { theme, setTheme } = useTheme();
   const image = session.user.image as string | undefined;
-  const imagePlaceholder = session.user.username
-    .split(" ")
-    .map((word) => word[0])
-    .slice(0, 2)
-    .join("");
+  const imagePlaceholder = getProfilePlaceholder(session.user.username);
+
+  const onThemeChange = () => {
+    setTheme(theme === "white" ? "dark" : "white");
+  };
 
   return (
     <Flex classname=" justify-between mb-2">
@@ -25,7 +33,30 @@ const Header = ({ session }: Props) => {
           <AvatarImage src={image} />
           <AvatarFallback>{imagePlaceholder}</AvatarFallback>
         </Avatar>
-        <GearIcon className="w-7 h-7" />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              {theme === "white" ? (
+                <IconMoonStars
+                  stroke={2}
+                  className="w-7 h-7 font-bold border rounded-full p-1 border-black active:animate-spin"
+                  onClick={onThemeChange}
+                />
+              ) : (
+                <IconSun
+                  stroke={2}
+                  className="w-7 h-7 font-bold border rounded-full p-1 border-white active:animate-spin"
+                  onClick={onThemeChange}
+                />
+              )}
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Change Theme</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        {/* <SettingModal /> */}
       </Flex>
     </Flex>
   );

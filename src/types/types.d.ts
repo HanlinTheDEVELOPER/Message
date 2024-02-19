@@ -14,5 +14,19 @@ interface SearchUserReqData {
 }
 
 interface SearchUserResData {
-  searchUsers: [{ id: string; username: string }];
+  searchUsers: SearchUser[];
+}
+
+interface SearchUser {
+  id: string;
+  username: string;
+  image: string;
+}
+
+interface CreateConversationReqData {
+  participantIds: string[];
+}
+
+interface CreateConversationResData {
+  conversationId: string;
 }

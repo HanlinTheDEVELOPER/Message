@@ -4,14 +4,13 @@ import TypographyH1 from "@/components/ui/h1";
 import TypographyH3 from "@/components/ui/h3";
 import { Input } from "@/components/ui/input";
 import Stack from "@/components/ui/stack";
-import { useMutation } from "@apollo/client";
-import { getSession, signIn, useSession } from "next-auth/react";
-import { FormEvent, useState } from "react";
 import UserQuery from "@/graphql/operations/user";
-import { toast } from "sonner";
+import { useMutation } from "@apollo/client";
+import { IconLoader } from "@tabler/icons-react";
 import { Session } from "next-auth";
-import { ReloadIcon } from "@radix-ui/react-icons";
-
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { toast } from "sonner";
 type Props = {
   session: Session | null;
 };
@@ -72,7 +71,7 @@ const Login = ({ session }: Props) => {
             disabled={loading}
           >
             {loading ? (
-              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              <IconLoader className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               "Save"
             )}
