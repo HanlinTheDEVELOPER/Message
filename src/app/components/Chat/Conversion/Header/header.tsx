@@ -16,7 +16,7 @@ const Header = ({ session }: Props) => {
     .map((word) => word[0])
     .slice(0, 2)
     .join("");
-  console.log(imagePlaceholder);
+
   return (
     <Flex classname=" justify-between mb-2">
       <TypographyH4>Messages</TypographyH4>

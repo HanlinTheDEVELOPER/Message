@@ -23,9 +23,10 @@ const CreateConversation = (props: Props) => {
     SearchUserReqData
   >(UserOperation.Queries.searchUsers);
 
+  console.log(data);
   const onSearchSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(inputRef.current?.value);
+
     searchUser({ variables: { username: inputRef.current?.value as string } });
   };
 
