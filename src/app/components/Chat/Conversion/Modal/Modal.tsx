@@ -24,6 +24,7 @@ interface Props {
 const Modal = ({ session }: Props) => {
   const inputRef = useRef<HTMLInputElement | null>();
   const [participants, setParticipants] = useState<Array<SearchUser>>([]);
+  const [open, setOpen] = useState(false);
 
   const [searchUser, { data, loading, error }] = useLazyQuery<
     SearchUserResData,
@@ -44,7 +45,7 @@ const Modal = ({ session }: Props) => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={() => setOpen((prev) => !prev)}>
       <DialogTrigger asChild className="w-full">
         <Button variant="secondary" className="w-full">
           Find or Start a conversation
@@ -61,9 +62,11 @@ const Modal = ({ session }: Props) => {
               ref={(el) => (inputRef.current = el)}
             />
             <Participants
+              setOpen={setOpen}
               session={session}
               participants={participants}
               removeParticipant={removeParticipant}
+              setParticipants={setParticipants}
             />
             <Button variant="secondary" className="cursor-pointer">
               Search

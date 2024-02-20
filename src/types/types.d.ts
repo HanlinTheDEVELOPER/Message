@@ -28,5 +28,7 @@ interface CreateConversationReqData {
 }
 
 interface CreateConversationResData {
-  conversationId: string;
+  createConversation: {
+    conversationId: string;
+  };
 }

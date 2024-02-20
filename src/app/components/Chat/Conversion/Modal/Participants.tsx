@@ -1,21 +1,32 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
-import EachParticipant from "./EachParticipant";
-import Flex from "@/components/ui/flex";
 import { Button } from "@/components/ui/button";
-import { IconSend2 } from "@tabler/icons-react";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import Flex from "@/components/ui/flex";
 import ConversationOperation from "@/graphql/operations/conversation";
-import { toast } from "sonner";
+import { useMutation } from "@apollo/client";
+import { IconSend2 } from "@tabler/icons-react";
 import { Session } from "next-auth";
+import { toast } from "sonner";
+import EachParticipant from "./EachParticipant";
+import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   participants: SearchUser[];
   session: Session;
+  setOpen: Dispatch<SetStateAction<boolean>>;
   removeParticipant: (userId: string) => void;
+  setParticipants: Dispatch<SetStateAction<SearchUser[]>>;
 }
 
-const Participants = ({ participants, removeParticipant, session }: Props) => {
+const Participants = ({
+  participants,
+  removeParticipant,
+  session,
+  setOpen,
+  setParticipants,
+}: Props) => {
   const opacity = participants.length !== 0 ? "opacity-1" : "opacity-0";
+
+  const router = useRouter();
 
   const [createConversation, { data, loading, error }] = useMutation<
     CreateConversationResData,
@@ -26,11 +37,23 @@ const Participants = ({ participants, removeParticipant, session }: Props) => {
     const {
       user: { id: userId },
     } = session;
+
     const ids = [userId, ...participants.map((p) => p.id)];
+
     try {
-      const {} = await createConversation({
+      const { data } = await createConversation({
         variables: { participantIds: ids },
       });
+      console.log(data);
+      const conversationId = data?.createConversation?.conversationId;
+
+      if (!conversationId) {
+        throw new Error("Create Conversation failed");
+      }
+
+      router.push(`?conversation=${conversationId}`);
+      setParticipants([]);
+      setOpen(false);
     } catch (error: any) {
       console.log(error);
       toast.error(error?.message);
@@ -50,7 +73,7 @@ const Participants = ({ participants, removeParticipant, session }: Props) => {
         ))}
       </Flex>
       {participants.length !== 0 && (
-        <Button onClick={onCreateConversation}>
+        <Button type="button" onClick={onCreateConversation}>
           <IconSend2 className="active:animate-spin-backward" />
         </Button>
       )}
