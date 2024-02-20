@@ -32,3 +32,28 @@ interface CreateConversationResData {
     conversationId: string;
   };
 }
+
+interface ConversationResData {
+  conversations: Conversation[];
+}
+
+interface Conversation {
+  id: string;
+  participants: Participants[];
+  updatedAt: Date;
+  lastMessage: {
+    id: string;
+    sender: {
+      id: string;
+      username: string;
+      image: string;
+    };
+    body: string;
+    createdAt: Date;
+  };
+}
+
+interface Participants {
+  user: SearchUser;
+  hasSeenLastMessage: boolean;
+}

@@ -26,7 +26,7 @@ const Header = ({ session }: Props) => {
   };
 
   return (
-    <Flex classname=" justify-between mb-2">
+    <div className="flex justify-between mb-2">
       <TypographyH4>Messages</TypographyH4>
       <Flex classname="items-center gap-2">
         <Avatar className="w-7 h-7">
@@ -58,7 +58,7 @@ const Header = ({ session }: Props) => {
 
         {/* <SettingModal /> */}
       </Flex>
-    </Flex>
+    </div>
   );
 };
 

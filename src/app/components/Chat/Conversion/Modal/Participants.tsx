@@ -52,6 +52,7 @@ const Participants = ({
       }
 
       router.push(`?conversation=${conversationId}`);
+      toast.success("Successfully Created Conversation");
       setParticipants([]);
       setOpen(false);
     } catch (error: any) {

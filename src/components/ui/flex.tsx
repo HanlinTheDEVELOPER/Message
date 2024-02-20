@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Flex = ({ classname, children }: Props) => {
+const Flex = ({ classname, children, ...props }: Props) => {
   return <div className={cn("flex", classname)}>{children}</div>;
 };
 
