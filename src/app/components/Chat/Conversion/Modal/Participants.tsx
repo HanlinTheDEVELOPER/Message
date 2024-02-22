@@ -44,7 +44,7 @@ const Participants = ({
       const { data } = await createConversation({
         variables: { participantIds: ids },
       });
-      console.log(data);
+
       const conversationId = data?.createConversation?.conversationId;
 
       if (!conversationId) {

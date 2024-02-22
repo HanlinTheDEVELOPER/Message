@@ -1,4 +1,7 @@
+"use client";
+import { Button } from "@/components/ui/button";
 import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 
 interface Props {
@@ -7,7 +10,11 @@ interface Props {
 // {searchParams.get("conversation")}
 const FeedWrapper = ({ session }: Props) => {
   const searchParams = useSearchParams();
-  return <div></div>;
+  return (
+    <div>
+      <Button onClick={signOut}>Sign out</Button>
+    </div>
+  );
 };
 
 export default FeedWrapper;

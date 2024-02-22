@@ -12,12 +12,12 @@ const ConversationFields = `
         }
         updatedAt
         lastMessage {
-          id 
           sender {
             id 
             username
             image
           }
+          id 
           body
           createdAt
         }
@@ -38,6 +38,15 @@ const conversation = {
       mutation CreateConversation($participantIds: [String]!) {
         createConversation(participantIds: $participantIds) {
           conversationId
+        }
+      }
+    `,
+  },
+  Subscription: {
+    conversationCreated: gql`
+      subscription conversationCreated {
+        conversationCreated {
+          hal
         }
       }
     `,
